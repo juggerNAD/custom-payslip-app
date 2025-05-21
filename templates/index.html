@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Payslip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+    .header-bar {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px 8px 0 0;
+      text-align: center;
+    }
+    .btn-primary {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="header-bar">
+      <h2>Custom Payslip Generator</h2>
+    </div>
+
+    <form action="/generate" method="POST" enctype="multipart/form-data" class="form-section">
+
+      <div class="row">
+        <div class="col-md-6">
+          <label>Employee Name</label>
+          <input type="text" name="employee_name" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Pay Period</label>
+          <input type="date" name="pay_period" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label>Hours Worked</label>
+          <input type="number" name="hours_worked" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>Hourly Rate</label>
+          <input type="number" name="hourly_rate" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>Bonus</label>
+          <input type="number" name="bonus" class="form-control">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label>OT Hours</label>
+          <input type="number" name="ot_hours" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>OT Rate Multiplier</label>
+          <input type="number" name="ot_rate" step="0.01" value="1.25" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>Tax</label>
+          <input type="number" name="tax" class="form-control">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label>SSS</label>
+          <input type="number" name="sss" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>Pag-ibig</label>
+          <input type="number" name="pagibig" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>PhilHealth</label>
+          <input type="number" name="philhealth" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-check mt-3">
+        <input class="form-check-input" type="checkbox" name="voluntary" id="voluntary">
+        <label class="form-check-label" for="voluntary">
+          Voluntary Contribution (skip deductions)
+        </label>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label>Company Name</label>
+          <input type="text" name="company_name" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Company Address</label>
+          <input type="text" name="company_address" class="form-control">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label>HR Manager</label>
+          <input type="text" name="hr_manager" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>HR Contact</label>
+          <input type="text" name="hr_contact" class="form-control">
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <label>Upload Company Logo</label>
+        <input type="file" name="logo" class="form-control">
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Generate Payslip</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payslip</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-size: 16px;
+      margin: 40px;
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      height: 60px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin: 10px 0 0 0;
+    }
+
+    .header p {
+      margin: 4px 0;
+      font-size: 16px;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0 10px;
+    }
+
+    .info div {
+      width: 48%;
+    }
+
+    .section-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .netpay {
+      text-align: center;
+      background-color: #007bff;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .qr-code {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .qr-code img {
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    {% if logo_path %}
+      <img src="{{ logo_path }}" alt="Company Logo">
+    {% endif %}
+    <h1>{{ data.company_name or 'Company Name' }}</h1>
+    <p>{{ data.company_address or 'Company Address' }}</p>
+  </div>
+
+  <div class="info">
+    <div>
+      <p><strong>Employee Name:</strong> {{ data.employee_name.upper() }}</p>
+      <p><strong>Employee ID:</strong> {{ data.employee_id }}</p>
+      <p><strong>Pay Period:</strong> {{ data.date_issued }}</p>
+    </div>
+    <div>
+      <p><strong>Payslip ID:</strong> {{ data.payslip_id }}</p>
+      <p><strong>HR Manager:</strong> {{ data.hr_manager or 'N/A' }}</p>
+      <p><strong>Contact:</strong> {{ data.hr_contact or 'N/A' }}</p>
+    </div>
+  </div>
+
+  <div class="section-title">Earnings</div>
+  <table>
+    <tr><td>Regular Pay</td><td>₱ {{ data.regular_pay }}</td></tr>
+    <tr><td>Overtime Pay</td><td>₱ {{ data.ot_pay }}</td></tr>
+    <tr><td>Bonus</td><td>₱ {{ data.bonus }}</td></tr>
+    <tr><th>Total Earnings</th><th>₱ {{ data.earnings }}</th></tr>
+  </table>
+
+  <div class="section-title">Deductions</div>
+  {% if data.voluntary %}
+    <p>No mandatory deductions — voluntary contributions only.</p>
+  {% else %}
+    <table>
+      <tr><td>Tax</td><td>₱ {{ data.tax }}</td></tr>
+      <tr><td>SSS</td><td>₱ {{ data.sss }}</td></tr>
+      <tr><td>Pag-ibig</td><td>₱ {{ data.pagibig }}</td></tr>
+      <tr><td>PhilHealth</td><td>₱ {{ data.philhealth }}</td></tr>
+      <tr><th>Total Deductions</th><th>₱ {{ data.deductions }}</th></tr>
+    </table>
+  {% endif %}
+
+  <div class="netpay">
+    NET PAY: ₱ {{ data.net_pay }}
+  </div>
+
+  <div class="qr-code">
+    <p>Verification Code</p>
+    <img src="{{ qr_path }}" alt="QR Code">
+  </div>
+
+  <div class="footer">
+    <p>This payslip was generated digitally on {{ data.date_issued }}.</p>
+  </div>
+
+</body>
+</html>
